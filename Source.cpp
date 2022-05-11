@@ -22,6 +22,8 @@ std::vector<std::string> scrambleVector(std::vector<std::string> vec1)
     srand(SEED_VAR_NAME);
     
     */
+    
+    //set vector size (decided to take the long route because you can figure it out if you have 1/584390 of a brain in how to do with 1 line lol)
     std::vector<std::string> newVector;
     for (int i = 0; i < vec1.size(); i++)
     {
@@ -36,25 +38,27 @@ std::vector<std::string> scrambleVector(std::vector<std::string> vec1)
         return vec1;
     }
 
-   
-    std::vector<int> magicNumberList;
-    for (int i = 0; i < vec1.size(); i++)
+    
+    std::vector<int> magicNumberList; //define list of magicNumbers so that we don't have duplicate reoccurrences of the same item.
+    for (int i = 0; i < vec1.size(); i++) //forloop of the vector size to get every single item
     {
-        entry:
-        int magicNumber = rand() % vec1.size();
-        for (int z = 0; z < magicNumberList.size(); z++)
+        //this entire code block is just to ensure we don't have duplicate occurrences
+        entry: //reentry point (self-explanatory)
+        int magicNumber = rand() % vec1.size(); // generate a random number inside the vector size 
+        for (int z = 0; z < magicNumberList.size(); z++) //loop through every past magicNumber to make sure there isnt a double
+            //also if there is a double it means that there will be a double occurrence so we CAN'T HAVE (double occurrence = one item deleted)
         {
-            if (magicNumberList[z] == magicNumber)
+            if (magicNumberList[z] == magicNumber) //if [selected item from vector] == currentMagicNumber
             {
-                goto entry;
+                goto entry; //loop back to entry and regenerate randomNumber infinite times until we get a correct one
             }
 
         }
 
-        newVector[i] = vec1[magicNumber];
-        magicNumberList.push_back(magicNumber);
+        newVector[i] = vec1[magicNumber]; //set value of newVector[index] to originalVector[magicNumber]
+        magicNumberList.push_back(magicNumber); //push_back the magic number to the old vector so we can find it again in the loop above
     }      
-    return newVector;
+    return newVector; //if you're reading this grow brain
 }
 
 int main()
